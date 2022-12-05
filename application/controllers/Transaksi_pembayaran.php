@@ -296,7 +296,7 @@ class Transaksi_pembayaran extends CI_Controller {
 			foreach ($tmp as $tmp) {
 			
 				$data = [
-					'kode_pembayaran' => $tmp->kode_pembayaran,
+					'kode_pembayaran' => kode_tr(),
 					'id_tahun' => $tmp->id_tahun,
 					'tgl_bayar' => $tmp->tgl_bayar,
 					'no_pendaftaran' => $tmp->no_pendaftaran,
