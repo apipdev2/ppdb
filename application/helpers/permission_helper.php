@@ -1,20 +1,20 @@
 <?php 
 
 
-function is_siswa()
+function is_peserta()
 {
 	$ci = get_instance();
-	$is_siswa = $ci->session->userdata('is_siswa');
+	$is_siswa = $ci->session->userdata('logged_in');
 
-	$user = $ci->db->get_where('peserta',['email'=>$ci->session->userdata('email')]);
+	$user = $ci->db->get_where('peserta',['id_peserta'=>$ci->session->userdata('id_user')]);
 
 	if ($user->num_rows() < 1) {
 		$ci->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda belum Login!</div>');
-		redirect('Auth_siswa');
+		redirect('Login');
 	}
 	elseif($is_siswa != TRUE || empty($is_siswa)){
 		$ci->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda belum Login!</div>');
-		redirect('Auth_siswa');
+		redirect('Login');
 	}
 }
 

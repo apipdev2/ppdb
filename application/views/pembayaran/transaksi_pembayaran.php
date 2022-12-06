@@ -50,7 +50,7 @@
 
 										
 
-											<div class="form-group row">
+											<!-- <div class="form-group row">
 												<div class="col-md-3">
 													<label for="">Sudah Dibayar</label>
 													<input type="text" id="total_du" class="form-control" readonly="">
@@ -67,7 +67,30 @@
 													<label for="">sisa</label>
 													<input type="text" id="sisa" class="form-control" readonly="">
 												</div>
-											</div>
+											</div> -->
+
+											<table border="1" width="95%" style="border:1px; border-collapse: collapse; margin: 17px;">
+												<tr>
+													<th width="40%">Dibayar</th>
+													<th id="dibayar" style="text-align: right;"></th>
+												</tr>
+												<tr>
+													<th id="jenis_potongan">Potongan</th>
+													<th id="potongan" style="text-align: right;"></th>
+												</tr>
+												<tr>
+													<th>Diskon</th>
+													<th id="discount" style="text-align: right;"></th>
+												</tr>
+												<tr class="bg-light">
+													<th>total</th>
+													<th id="jml" style="text-align: right;"></th>
+												</tr>
+												<tr>
+													<th>Sisa</th>
+													<th id="sisa" style="text-align: right;"></th>
+												</tr>
+											</table>
 
 										
 												
@@ -153,7 +176,7 @@
 		      </div>
 		      
 		      <div class="modal-body">
-		        
+		        <div class="table-responsive">
 		        <table id="basic-datatables" class="display table">	
 			        <thead>
 						<tr>
@@ -183,7 +206,7 @@
 
 					</tbody>
 				</table>
-
+				</div>
 
 		        
 		      </div>
@@ -254,23 +277,21 @@
 								no_pendaftaran : no_pendaftaran
 							},
 							success : function(data1){	
-								
 								var total_du = parseInt(data1.total_du['besarnya_pembayaran']);
 								var potongan = parseInt(data1.potongan['nominal']);
-								var jml = total_du + potongan;
+								var diskon = parseInt(data1.diskon['diskon']);
+								var jml = total_du + potongan + diskon;
 								var sisa = 2000000 - jml;
 
-								if (total_du + potongan >=2000000) {
-
-									$('#total_du').html('LUNAS');
-
-								} else {
+								
 									
-									$('#total_du').val(total_du);
-									$('#potongan').val(potongan);
-									$('#jml').val(jml);
-									$('#sisa').val(sisa);
-								}							
+								$('#dibayar').html(total_du);
+								$('#jenis_potongan').html('Potongan '+data1.potongan['jenis_potongan']);
+								$('#potongan').html(potongan);
+								$('#discount').html(diskon);
+								$('#jml').html(jml);
+								$('#sisa').html(sisa);
+															
 								
 								
 							}
@@ -287,51 +308,58 @@
 		var id_jenis = $('#id_jenis').val();
 		var besarnya = $('#besarnya').val();
 		var diskon = $('#diskon').val();
-		var j_besarnya = parseInt(besarnya)+parseInt(diskon);
+		
 
-		$.ajax({
-			type : "post",
-			dataType: "JSON",
-			url : "<?= base_url('Transaksi_pembayaran/Bayar/');?>",
-			data :{
-				tgl_bayar : tgl_bayar,
-				no_pendaftaran : no_pendaftaran,
-				id_jenis : id_jenis,
-				besarnya : j_besarnya,
-			},
-			success : function(data){
+		
 				
 				$.ajax({
-							type : "post",
-							dataType: "JSON",
-							url : "<?= base_url('Transaksi_pembayaran/getTotalDU/');?>",
-							data :{
-								no_pendaftaran : no_pendaftaran
-							},
-							success : function(data){	
+					type : "post",
+					dataType: "JSON",
+					url : "<?= base_url('Transaksi_pembayaran/getTotalDU/');?>",
+					data :{
+						no_pendaftaran : no_pendaftaran
+					},
+					success : function(data1){	
 
-								var total = parseInt(data.total_du['besarnya_pembayaran'])+parseInt(data.potongan['nominal'])+parseInt(j_besarnya);
+						var total = parseInt(data1.total_du['besarnya_pembayaran'])+parseInt(data1.potongan['nominal'])+parseInt(data1.diskon['diskon'])+parseInt(besarnya)+parseInt(diskon);
 
-								if (total >= parseInt(2000001)) {
+						if (total > parseInt(2000000)) {
 
-									alert('Silahkan Cek Kembali Pembayaran');
+							alert('Silahkan Cek Kembali Pembayaran');
 
-								} else {
-									if (data =="1") {
-										alert('Data Sudah ada.!');
-									} else {
+						} else {
+
+							$.ajax({
+									type : "post",
+									dataType: "JSON",
+									url : "<?= base_url('Transaksi_pembayaran/Bayar/');?>",
+									data :{
+										tgl_bayar : tgl_bayar,
+										no_pendaftaran : no_pendaftaran,
+										id_jenis : id_jenis,
+										besarnya : besarnya,
+										diskon : diskon,
+									},
+									success : function(data){
+										if (data =="1") {
+											alert('Data Sudah ada.!');
+										} else {
 
 										view();
-									}
-								}							
+										}
 								
-								
-							}
-						});
+								}
+							});
+					
+						}	
 
-				
-			}
-		});
+												
+						
+						
+					}
+				});
+
+			
 	});
 
 

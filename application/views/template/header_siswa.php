@@ -16,31 +16,7 @@
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css');?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/atlantis.min.css');?>">
 	<!-- jquery -->
-	<style>
-		fieldset.scheduler-border {
-		    border: solid 1px #DDD !important;
-		    padding: 0 10px 10px 10px;
-		    border-bottom: none;
-		}
-
-		legend.scheduler-border {
-		    width: auto !important;
-		    border: none;
-		    font-size: 10px;
-		}
-		/*.form-group{
-			margin-top: 0 !important;
-			margin-bottom: 0 i !important;
-		}
-
-		.form-control{
-			height: 32px !important;
-			padding-left: 6px !important;
-			padding-top: 1px !important;
-			padding-bottom: 1px !important;
-
-		}*/
-	</style>
+	
 
 	<script src="<?= base_url('assets/js/core/jquery.3.2.1.min.js');?>"></script>
 
@@ -87,7 +63,7 @@
 										<div class="user-box">
 											<div class="avatar-lg"><img src="<?= base_url('assets/images/foto/'.$this->session->userdata('image'));?>" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4><?= $this->session->userdata('username'); ?></h4>
+												<h4><?= $this->session->userdata('nama_peserta'); ?></h4>
 												<p class="text-muted">
 													<?= $this->session->userdata('email'); ?>
 												</p>
@@ -98,7 +74,7 @@
 									
 									<li>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="<?= base_url('Auth/logout'); ?>">Logout</a>
+										<a class="dropdown-item" href="<?= base_url('Login/logout'); ?>">Logout</a>
 									</li>
 								</div>
 							</ul>
@@ -112,3 +88,33 @@
 		
 
 		
+		<!-- modal changer -->
+			<div class="modal fade" id="pass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Ganti Password</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form action="<?= base_url('Siswa/change_password'); ?>" method="post">
+		      <div class="modal-body">
+		        
+		        	
+		        	<div class="form-group">
+						<label>Password</label>
+						<input type="text" name="password" class="form-control">
+					</div>
+
+		        
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Simpan</button>
+		      </div>
+
+		      </form>
+		    </div>
+		  </div>
+		</div>

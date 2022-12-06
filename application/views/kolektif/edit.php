@@ -44,6 +44,20 @@
 										</div>
 
 										<div class="form-group">
+											<label>Jenis Potongan</label>
+											<select name="id_potongan" id="id_potongan" class="form-control">
+												<option value="">Pilih</option>
+											<?php foreach ($potongan as $potongan): ?>
+											<?php if ($kolektif->id_potongan == $potongan->id_potongan): ?>
+											<option value="<?= $potongan->id_potongan; ?>" selected><?= $potongan->jenis_potongan; ?> |Rp. <?= number_format($potongan->nominal); ?></option>
+											<?php else: ?>
+											<option value="<?= $potongan->id_potongan; ?>"><?= $potongan->jenis_potongan; ?> |Rp. <?= number_format($potongan->nominal); ?></option>									
+											<?php endif ?>
+											<?php endforeach ?>
+											</select>
+										</div>
+
+										<div class="form-group">
 											<label>Jenis Kolektor</label>
 											<select name="id_kolektor" id="id_kolektor" class="form-control">
 												<option value="">Pilih</option>

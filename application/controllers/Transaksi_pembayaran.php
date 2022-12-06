@@ -27,9 +27,18 @@ class Transaksi_pembayaran extends CI_Controller {
 	public function laporan()
 	{	
 		
+		
+		
 		$data = [
-			'title'=>'Lapora Data DU',
-			
+			'title'=>'Laporan Data DU',
+			'du' => $this->db->select('*')
+					->from('transaksi_pembayaran tp')
+					->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
+					->join('jurusan j','j.id_jurusan = p.id_jurusan')
+					->join('jenis_pembayaran jp','jp.id_jenis = tp.id_jenis')
+					->join('tbl_user u','u.id_user = tp.id_user')
+					->group_by('tp.no_pendaftaran')
+					->get()->result(),
 		];
 
 		$this->load->view('template/header',$data);
@@ -89,57 +98,29 @@ class Transaksi_pembayaran extends CI_Controller {
 		$this->load->view('pembayaran/read',$data);
 	}
 
-	public function read_laporan()
+	public function cetak_laporan()
 	{	
-		$tgl1 = $this->input->post('tgl1');
-		$tgl2 = $this->input->post('tgl2');
-
-
-		$cek_du   = $this->db->select('*')
-				->from('transaksi_pembayaran tp')
-				->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
-				->join('jurusan j','j.id_jurusan = p.id_jurusan')
-				->join('jenis_pembayaran jp','jp.id_jenis = tp.id_jenis')
-				->join('tbl_user u','u.id_user = tp.id_user')
-				->where('tp.tgl_bayar >=', $tgl1)
-				->where('tp.tgl_bayar <=', $tgl2)
-				->get()->num_rows();
-
-		if ($cek_du > 0) {
-
-			$du   = $this->db->select('*')
-				->from('transaksi_pembayaran tp')
-				->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
-				->join('jurusan j','j.id_jurusan = p.id_jurusan')
-				->join('jenis_pembayaran jp','jp.id_jenis = tp.id_jenis')
-				->join('tbl_user u','u.id_user = tp.id_user')
-				->where('tp.tgl_bayar >=', $tgl1)
-				->where('tp.tgl_bayar <=', $tgl2)
-				->get()->result();
-		}else{
-
-			$du   = $this->db->select('*')
-				->from('transaksi_pembayaran tp')
-				->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
-				->join('jurusan j','j.id_jurusan = p.id_jurusan')
-				->join('jenis_pembayaran jp','jp.id_jenis = tp.id_jenis')
-				->join('tbl_user u','u.id_user = tp.id_user')
-				->get()->result();
-		}
-
-		
-			
-		
-		
 		
 		$data = [
-			'title'=>'Transaksi Pembayaran',
-			'du' => $du,
+			'title'=>'Laporan Data DU',
+			'du' => $this->db->select('*')
+					->from('transaksi_pembayaran tp')
+					->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
+					->join('jurusan j','j.id_jurusan = p.id_jurusan')
+					->join('jenis_pembayaran jp','jp.id_jenis = tp.id_jenis')
+					->join('tbl_user u','u.id_user = tp.id_user')
+					->group_by('tp.no_pendaftaran')
+					->get()->result(),
 		];
 
-		$this->load->view('pembayaran/read_laporan',$data);
+		$this->load->library('Pdf');
+	    $this->pdf->setFileName = "Rekap Data DU.pdf";
+	    $this->pdf->setPaper('Legal', 'Landscape');
+
+		$this->pdf->loadView('pembayaran/cetak_laporan',$data);
 	}
 
+	
 	public function print()
 	{	
 		$tgl1 = $this->uri->segment(3);
@@ -174,6 +155,7 @@ class Transaksi_pembayaran extends CI_Controller {
 	{
 		$this->load->helper("terbilang");
 		$id = decrypt_url($id);
+
 		$pembayaran = $this->db->select('*')
 								->from('transaksi_pembayaran tp')
 								->join('peserta p','p.no_pendaftaran = tp.no_pendaftaran')
@@ -187,6 +169,19 @@ class Transaksi_pembayaran extends CI_Controller {
 			'title'=>'Kwitansi Pembayaran Daftar Ulang',
 			'kwitansi' => $pembayaran,
 			'terbilang' => to_word($pembayaran->besarnya_pembayaran).' Rupiah',
+
+			'dibayar'=>$this->db->select_sum('besarnya_pembayaran')
+						 ->where('no_pendaftaran',$pembayaran->no_pendaftaran)
+						 ->get('transaksi_pembayaran')->row(),
+			'diskon'=>$this->db->select_sum('diskon')
+						 ->where('no_pendaftaran',$pembayaran->no_pendaftaran)
+						 ->get('transaksi_pembayaran')->row(),
+			'potongan' => $this->db->select('*')
+						 ->from('peserta p')
+						 ->join('jurusan j', 'j.id_jurusan = p.id_jurusan')
+						 ->join('tbl_potongan tp', 'tp.id_potongan = p.id_potongan')
+						 ->where('p.no_pendaftaran',$pembayaran->no_pendaftaran)
+						 ->get()->row(),
 		];
 		
 		$this->load->library('Pdf');
@@ -201,7 +196,11 @@ class Transaksi_pembayaran extends CI_Controller {
 	{
 		$data = [
 			'title'=>'Tambah Transaksi Pembayaran',
-			'peserta'=> $this->pm->getAllPeserta()->result(),
+			'peserta'=> $this->db->select('*')
+						 ->from('peserta p')
+						 ->join('jurusan j', 'j.id_jurusan = p.id_jurusan')
+						 ->where('p.status_pendaftaran','Y')
+						 ->get()->result(),
 			'jenis_pembayaran'=> $this->db->get_where('jenis_pembayaran',['status'=>'Y'])->result(),
 			
 
@@ -243,11 +242,7 @@ class Transaksi_pembayaran extends CI_Controller {
 						 ->where('no_pendaftaran',$this->input->post('no_pendaftaran'))
 						 ->get('transaksi_pembayaran')->row();
 
-		$cek = $this->db->get_where('transaksi_pembayaran_tmp',[
-					'no_pendaftaran' => $this->input->post('no_pendaftaran'),
-					'id_jenis' => $this->input->post('id_jenis'),
-					'besarnya_pembayaran' => $this->input->post('besarnya'),
-				])->num_rows();
+		$cek = $this->db->get('transaksi_pembayaran_tmp')->num_rows();
 
 		
 		if ($cek > 0) {
@@ -263,6 +258,7 @@ class Transaksi_pembayaran extends CI_Controller {
 				'tgl_bayar' => $this->input->post('tgl_bayar'),
 				'no_pendaftaran' => $this->input->post('no_pendaftaran'),
 				'id_jenis' => $this->input->post('id_jenis'),
+				'diskon' => $this->input->post('diskon'),
 				'besarnya_pembayaran' => $this->input->post('besarnya'),
 				'id_user' => $this->session->userdata('id_user'),
 			];
@@ -301,6 +297,7 @@ class Transaksi_pembayaran extends CI_Controller {
 					'tgl_bayar' => $tmp->tgl_bayar,
 					'no_pendaftaran' => $tmp->no_pendaftaran,
 					'id_jenis' => $tmp->id_jenis,
+					'diskon' => $tmp->diskon,
 					'besarnya_pembayaran' => $tmp->besarnya_pembayaran,
 					'id_user' => $tmp->id_user,
 				];
@@ -338,6 +335,25 @@ class Transaksi_pembayaran extends CI_Controller {
 	}
 
 
+	public function delete($id)
+	{
+		if ($this->session->userdata('id_level')==1) {
+			$id = decrypt_url($id);
+			$this->db->where('id',$id);
+			$this->db->delete('transaksi_pembayaran');
+			$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Terhapus!', 'success');</script>");
+	        redirect('Transaksi_pembayaran');
+        }else{
+
+			$this->session->set_flashdata('message', "<script>swal('Info!', 'Not allowed access.!', 'info');</script>");
+			redirect('Transaksi_pembayaran');
+		}
+
+	}
+	
+	
+
+
 
 	public function getTotalDU()
 	{
@@ -347,12 +363,15 @@ class Transaksi_pembayaran extends CI_Controller {
 			'total_du'=>$this->db->select_sum('besarnya_pembayaran')
 						 ->where('no_pendaftaran',$no_pendaftaran)
 						 ->get('transaksi_pembayaran')->row(),
+			'diskon'=>$this->db->select_sum('diskon')
+						 ->where('no_pendaftaran',$no_pendaftaran)
+						 ->get('transaksi_pembayaran')->row(),
 			'potongan' => $this->db->select('*')
-											 ->from('peserta p')
-											 ->join('jurusan j', 'j.id_jurusan = p.id_jurusan')
-											 ->join('tbl_potongan tp', 'tp.id_potongan = p.id_potongan')
-											 ->where('p.no_pendaftaran',$no_pendaftaran)
-											 ->get()->row(),
+						 ->from('peserta p')
+						 ->join('jurusan j', 'j.id_jurusan = p.id_jurusan')
+						 ->join('tbl_potongan tp', 'tp.id_potongan = p.id_potongan')
+						 ->where('p.no_pendaftaran',$no_pendaftaran)
+						 ->get()->row(),
 				];
 
 		echo json_encode($data);

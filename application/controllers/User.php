@@ -7,6 +7,10 @@ class User extends CI_Controller {
 	{
 		parent::__construct();
 		is_admin();
+		if ($this->session->userdata('id_level')!=1) {
+			$this->session->set_flashdata('message', "<script>swal('Info!', 'Not Allowed!', 'info');</script>");
+        	redirect('Dashboard');
+		}
 	}
 
 	public function index()
@@ -33,6 +37,7 @@ class User extends CI_Controller {
 			'email'	    	=> $this->input->post('email'),
 			'password'	    => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 			'id_level'	    => $this->input->post('id_level'),
+			'image'			=> 'default.jpg',
 			'is_active'		=> 'Y'
 		];
 
@@ -42,7 +47,8 @@ class User extends CI_Controller {
 	}
 
 	public function edit($id)
-	{
+	{	
+		$id = decrypt_url($id);
 		$data = [
 			'username'		=> $this->input->post('username'),
 			'email'	    	=> $this->input->post('email'),
@@ -54,10 +60,13 @@ class User extends CI_Controller {
 		$this->db->update('tbl_user',$data);
 		$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Diubah!', 'success');</script>");
         	redirect('User');
+
+
 	}
 
 	public function change($id)
-	{
+	{	
+		$id = decrypt_url($id);
 		$data = [
 			'password'	    => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 		];
@@ -69,7 +78,7 @@ class User extends CI_Controller {
 
 	public function delete($id)
 	{
-		
+		$id = decrypt_url($id);
 		$this->db->where('id_user',$id);
 		$this->db->delete('tbl_user');
 		$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Dihapus!', 'success');</script>");

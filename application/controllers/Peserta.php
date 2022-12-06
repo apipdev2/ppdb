@@ -144,40 +144,6 @@ class Peserta extends CI_Controller {
 
 
 
-	public function verifikasi($id)
-	{	
-		$id = decrypt_url($id);
-		$data = [
-			'title' => 'Potongan',
-			'peserta'=> $this->pm->getPesertaById($id)->row(),
-			'kolektif'	=> $this->db->get('tbl_kolektor')->result(),
-			'potongan'	=> $this->db->get('tbl_potongan')->result(),
-		];
-
-		$this->form_validation->set_rules('id_potongan', 'potongan', 'required');
-
-		if ($this->form_validation->run()==false) {
-
-			$this->load->view('template/header',$data);
-			$this->load->view('template/sidebar',$data);
-			$this->load->view('peserta/verifikasi',$data);
-			$this->load->view('template/footer',$data);
-		}else{	
-
-		
-
-			$this->db->where('id_peserta',$this->input->post('id_peserta'))->update('peserta',[
-					'id_potongan' 	=> $this->input->post('id_potongan'),
-					
-				]);
-		
-			
-			
-			$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Tersimpan!', 'success');</script>");
-        	redirect('peserta');
-		}
-	}
-
 	public function view($id)
 	{	
 		$id = decrypt_url($id);
@@ -295,12 +261,19 @@ class Peserta extends CI_Controller {
 
 	public function delete($id)
 	{	
-		$id = decrypt_url($id);
-		$this->db->where('id_peserta',$id)->delete('peserta');
+		if ($this->session->userdata('id_level')==1){
 
-		$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Diubah!', 'success');</script>");
-    	redirect('peserta');
+				$id = decrypt_url($id);
+				$this->db->where('id_peserta',$id)->delete('peserta');
+
+				$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Diubah!', 'success');</script>");
+		    	redirect('peserta');
+		}else{
+				$this->session->set_flashdata('message', "<script>swal('info!', 'Not allowed!', 'info');</script>");
+		    	redirect('peserta');
+		}
 	}
+	
 
 	public function getCashback()
 	{	

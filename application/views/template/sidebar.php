@@ -74,6 +74,9 @@
 								</ul>
 							</div>
 						</li>
+
+						<?php if ($this->session->userdata('id_level')==1): ?>
+							
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#submenu">
 								<i class="fas fa-bars"></i>
@@ -98,16 +101,22 @@
 							</div>
 						</li>
 						
+						
 
-						<li class="nav-item">
-							<a href="<?= base_url('User'); ?>">
-								<i class="fas fa-user-secret"></i>
-								<p>User</p>
-							</a>
-						</li>
+							<li class="nav-item">
+								<a href="<?= base_url('User'); ?>">
+									<i class="fas fa-user-secret"></i>
+									<p>User</p>
+								</a>
+							</li>
+
+						<?php endif ?>
+						
 						
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!-- End Sidebar -->
+
+		<div class="main-panel">

@@ -24,41 +24,69 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<form action="" method="post">
-
-										<div class="row">
-											<div class="col-md-5">
-												<div class="form-group row">
-												    <label  class="col-sm-2 col-form-label">Tanggal</label>
-												    <div class="col-sm-10">
-												      <input type="date" name="tgl1" id="tgl1" class="form-control">
-												    </div>
-												  </div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group row">
-												    <label class="col-sm-2 col-form-label">S/d</label>
-												    <div class="col-sm-10">
-												      <input type="date" name="tgl2" id="tgl2" class="form-control">
-												    </div>
-												  </div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group row">	
-													<button type="button" class="btn btn-info" onclick="range()"><i class="fas fa-search"></i></button>
-												</div>
-											</div>
-										</div>
-									
-									</form>
+									<a href="<?= base_url('Transaksi_pembayaran/cetak_laporan'); ?>" class="btn btn-primary float-right" ><i class="fas fa-print"></i> Cetak</a>
 									
 								</div>
 								<div class="card-body">
 
 									<div class="table-responsive">
-										<div class="read">
+										<table id="basic-datatables" class="display table table-striped">
+											<thead>
+												<tr>
+													<th>No</th>
+													<th>No Pendaftaran</th>
+													<th>Nama Peserta</th>
+													<th>JK</th>
+													<th>Jurusan</th>
+													<th>Dibayar</th>
+													<th>Sisa</th>
+													<th>Status</th>
+												</tr>
+											</thead>											
+											<tbody>
+												<?php $no=1; foreach ($du as $du): ?>
+												<?php 
+
+													$dibayar = $this->db->select_sum('besarnya_pembayaran','j_dibayar')
+													->where('no_pendaftaran',$du->no_pendaftaran)
+													->get('Transaksi_pembayaran')->row();
+
+													$diskon = $this->db->select_sum('diskon','j_diskon')
+													->where('no_pendaftaran',$du->no_pendaftaran)
+													->get('Transaksi_pembayaran')->row();
+
+													$potongan = $this->db->select('*')
+																->from('peserta p')
+																->join('tbl_potongan pt','pt.id_potongan = p.id_potongan')
+																->where('no_pendaftaran',$du->no_pendaftaran)
+																->get()->row();
+
+													$jml_pembayaran = $dibayar->j_dibayar + $potongan->nominal + $diskon->j_diskon;
+
+													$sisa = 2000000 - $jml_pembayaran;
+
+													if ($jml_pembayaran >= 2000000) {
+														$status ='LUNAS';
+													}else{
+														$status ="Belum LUNAS";
+													}
+												 ?>
+												
+												<tr>
+													<td><?= $no; ?></td>
+													<td><?= $du->no_pendaftaran; ?></td>
+													<td><?= $du->nama_peserta; ?></td>
+													<td><?= $du->jenis_kelamin; ?></td>
+													<td><?= $du->nama_jurusan; ?></td>
+													<td>Rp.<?= number_format($jml_pembayaran ); ?></td>
+													<td>Rp.<?= number_format($sisa); ?></td>
+													<td><?= $status;?></td>
+													
+												</tr>
 											
-										</div>
+											<?php $no++; endforeach ?>
+											</tbody>
+										</table>
 									</div>
 													
 													
@@ -72,31 +100,5 @@
 				</div>
 			</div>
 
+		
 
-<script>
-
-	range();
-    
-
-    function range(){
-    	var tgl1 = $('#tgl1').val();
-    	var tgl2 = $('#tgl2').val();
-
-    	$.ajax({
-
-    		type : 'POST',
-    		data : 'JSON',
-    		url :"<?= base_url('Transaksi_pembayaran/read_laporan');?>",
-    		data  : {tgl1 : tgl1, tgl2:tgl2},
-    		success:function(data){
-
-    			 $('.read').html(data);
-    		}
-    	})
-
-
-    }
-
-
-
-</script>	

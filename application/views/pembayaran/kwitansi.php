@@ -102,11 +102,23 @@
 		</tr>			
 	</table>
 
+	<?php 
+
+		$jumlah = $dibayar->besarnya_pembayaran + $potongan->nominal + $diskon->diskon;
+
+		if ($jumlah == "2000000") {
+			
+			$status = '<h2 style="color: green;">LUNAS</h2>';
+		}else{
+			$status = '<h2 style="color: red;">BELUM LUNAS</h2>';
+		}
+	 ?>
+
 
 	<table width="100%">
 		<tr>
 			<td width="40%">Seragam Juruan :<?= $kwitansi->size_jurusan; ?>| Seragam Olahraga : <?= $kwitansi->size_olahraga; ?></td>
-			<td width="40%"style="height: 40px;"></td>
+			<td width="40%"style="height: 40px; text-align: center;"><?= $status; ?></td>
 			<td width="40%" style="text-align: center; font-weight: bold;"><?= $kwitansi->username; ?></td>
 		</tr>			
 	</table>

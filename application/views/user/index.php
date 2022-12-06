@@ -50,7 +50,7 @@
 														<div class="btn-group">
 														<a href="#" class="btn btn-warning btn-sm"><i class="fas fa-key" data-toggle="modal" data-target="#pass<?= $u->id_user;?>"></i></a>
 														<a href="#" class="btn btn-info btn-sm"><i class="fas fa-edit" data-toggle="modal" data-target="#user<?= $u->id_user;?>"></i></a>
-														<a href="<?= base_url('User/delete/'.$u->id_user); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+														<a href="<?= base_url('User/delete/'.encrypt_url($u->id_user)); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
 														</div>
 													</td>
 												</tr>
@@ -90,7 +90,7 @@
 
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" name="nama_jurusan" class="form-control">
+						<input type="email" name="email" class="form-control">
 					</div>
 
 					<div class="form-group">
@@ -131,7 +131,7 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-		      <form action="<?= base_url('User/edit/'.$u->id_user); ?>" method="post">
+		      <form action="<?= base_url('User/edit/'.encrypt_url($u->id_user)); ?>" method="post">
 		      <div class="modal-body">
 		        
 		        	
@@ -160,12 +160,10 @@
 
 					<div class="form-group">
 						<label>Status</label>
-						<select name="id_level" class="form-control">
+						<select name="is_active" class="form-control">
 							
 							<?php if ($u->is_active == 'Y'): ?>
 								<option value="Y" selected>active</option>
-							<?php else: ?>
-								<option value="Y">Active</option>
 								<option value="N">Non active</option>
 							<?php endif ?>								
 							
@@ -186,7 +184,6 @@
 		</div>
 
 
-		//change
 		<div class="modal fade" id="pass<?= $u->id_user;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -196,7 +193,7 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-		      <form action="<?= base_url('User/change/'.$u->id_user); ?>" method="post">
+		      <form action="<?= base_url('User/change/'.encrypt_url($u->id_user)); ?>" method="post">
 		      <div class="modal-body">
 		        
 		        	

@@ -25,7 +25,7 @@
 							<div class="card">
 								<div class="card-header">
 									<a href="<?= base_url('Kolektif/add'); ?>" class="btn btn-success btn-sm"> Tambah</a>
-									<a href="<?= base_url('Kolektif/cetak/'.encrypt_url($tgl1).'/'.encrypt_url($tgl2)); ?>" class="btn btn-primary btn-sm float-right" target="_blank"> Cetak</a>
+									
 								</div>
 								<div class="card-body">
 
@@ -49,8 +49,9 @@
 												  </div>
 											</div>
 											<div class="col-md-4">
-												<div class="form-group row">	
+												<div class="btn-group">	
 													<button class="btn btn-info "><i class="fas fa-search"></i></button>
+													<a href="<?= base_url('Kolektif/cetak/'.encrypt_url($tgl1).'/'.encrypt_url($tgl2)); ?>" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i></a>
 												</div>
 											</div>
 										</div>

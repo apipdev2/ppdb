@@ -10,6 +10,7 @@
 		
 		
 	</div>
+</div>
 	<!--   Core JS Files   -->
 	
 	<script src="<?= base_url('assets/js/core/popper.min.js');?>"></script>

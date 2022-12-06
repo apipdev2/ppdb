@@ -33,7 +33,7 @@
 		
 	</style>
 </head>
-<body>
+<body style="margin:0px,50px,0px,50px; padding: 0px; font-size: 8px;">
 	
 	<table width="100%">
 		<tr>

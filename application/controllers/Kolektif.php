@@ -60,6 +60,7 @@ class Kolektif extends CI_Controller {
 			'title'=>'Tambah',
 			'peserta'=> $this->pm->getAllPeserta()->result(),
 			'kolektor'	=> $this->db->get('tbl_kolektor')->result(),
+			'potongan'	=> $this->db->get('tbl_potongan')->result(),
 		];
 
 		$this->form_validation->set_rules('id_peserta','Peserta','required');
@@ -91,7 +92,7 @@ class Kolektif extends CI_Controller {
 			}else{
 
 			$this->db->where('id_peserta',$this->input->post('id_peserta'));
-			$this->db->update('peserta',['status_pendaftaran'=>'Y']);
+			$this->db->update('peserta',['no_pendaftaran' => autonumber(),'id_potongan'=>$this->input->post('id_potongan'),'status_pendaftaran'=>'Y']);
 
 			$this->db->insert('tbl_kolektif',$data);
 			$this->session->set_flashdata('message', "<script>swal('Success!', 'Data Tersimpan.!', 'success');</script>");
@@ -114,6 +115,7 @@ class Kolektif extends CI_Controller {
 								   ->join('peserta p','p.id_peserta = kl.id_peserta')
 								   ->where('id_kolektif', $id)
 								   ->get()->row(),
+			'potongan'	=> $this->db->get('tbl_potongan')->result(),
 		];
 
 		$this->form_validation->set_rules('id_peserta','Peserta','required');
@@ -138,6 +140,11 @@ class Kolektif extends CI_Controller {
 			];
 			$this->db->where('id_kolektif',$id);
 			$this->db->update('tbl_kolektif',$data);
+
+			$this->db->where('id_peserta',$this->input->post('id_peserta'));
+			$this->db->update('peserta',['id_potongan'=>$this->input->post('id_potongan')]);
+
+			$this->session->set_flashdata('message', "<script>swal('Success!', 'Data Berhasil diubah.!', 'success');</script>");
         	redirect('Kolektif');
 		}
 		

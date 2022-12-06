@@ -55,7 +55,10 @@
 													<td class="text-center">
 														<div class="btn-group">
 															<a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cb<?= $p->id_cb; ?>"><i class="fas fa-search"></i></a>
-														<a href="<?= base_url('Cabutberkas/delete/'.encrypt_url($p->id_cb).'/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+														<?php if ($this->session->userdata('id_level')==1): ?>
+															<a href="<?= base_url('Cabutberkas/delete/'.encrypt_url($p->id_cb).'/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+														<?php endif ?>
+														
 														</div>
 													</td>
 												</tr>

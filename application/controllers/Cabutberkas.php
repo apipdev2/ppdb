@@ -96,18 +96,25 @@ class Cabutberkas extends CI_Controller {
 	}
 
 	public function delete($id)
-	{
-		$id = decrypt_url($id);
-		$peserta = decrypt_url($this->uri->segment(4));
-		//delete cb
-		$this->db->where('id_cb',$id);
-		$this->db->delete('cabut_berkas');
-		// update peserta
-		$this->db->where('id_peserta',$peserta);
-		$this->db->update('peserta',['status' => 'Y', 'status_daftar_ulang' => 'N']);
+	{	
+		if ($this->session->userdata('id_level')==1) {
+			$id = decrypt_url($id);
+			$peserta = decrypt_url($this->uri->segment(4));
+			//delete cb
+			$this->db->where('id_cb',$id);
+			$this->db->delete('cabut_berkas');
+			// update peserta
+			$this->db->where('id_peserta',$peserta);
+			$this->db->update('peserta',['status' => 'Y', 'status_daftar_ulang' => 'N']);
 
-		$this->session->set_flashdata('message', "<script>swal('Success!', 'Data Dihapus.!', 'success');</script>");
-        redirect('Cabutberkas');
+			$this->session->set_flashdata('message', "<script>swal('Success!', 'Data Dihapus.!', 'success');</script>");
+	        redirect('Cabutberkas');
+		}else{
+
+			$this->session->set_flashdata('message', "<script>swal('warning!', 'Not allowed.!', 'info');</script>");
+	        redirect('Cabutberkas');
+		}
+		
 	}
 
 	public function kwitansi($id)

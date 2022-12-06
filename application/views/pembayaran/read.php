@@ -27,7 +27,10 @@
 				
 				<td>
 					<a href="<?= base_url('Transaksi_pembayaran/kwitansi_du/'.encrypt_url($du->id)); ?>" class="fas fa-print text-info" target="_blank"></a>
-					<a href="<?= base_url('Transaksi_pembayaran/delete/'.encrypt_url($du->id).'/'.encrypt_url($du->id_peserta)); ?>" class="fas fa-trash text-danger"></a>
+					<?php if ($this->session->userdata('id_level')==1): ?>
+						<a href="<?= base_url('Transaksi_pembayaran/delete/'.encrypt_url($du->id)); ?>" class="fas fa-trash text-danger"></a>
+					
+					<?php endif ?>
 				</td>
 			</tr>
 		

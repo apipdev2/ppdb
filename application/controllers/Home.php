@@ -7,12 +7,14 @@ class Home extends CI_Controller {
 	{	
 		$data = [
 			'title'=>'Dashboard',
-			'peserta' => $this->db->get_where('peserta',['id_peserta' => $this->session->userdata('id_user')])->row()
+			'peserta' => $this->db->get_where('peserta',['id_peserta' => $this->session->userdata('id_user')])->row(),
+			'jurusan' => $this->db->get('jurusan')->result(),
+			'asal_sekolah' => $this->db->select('asal_sekolah')->from('peserta')->group_by('asal_sekolah')->get()->result(),
 		];
 
 
 
-		$this->load->view('template/header',$data);
+		$this->load->view('template/header_siswa',$data);
 		$this->load->view('template/sidebar_siswa',$data);
 		$this->load->view('home',$data);
 		$this->load->view('template/footer',$data);

@@ -67,10 +67,13 @@
 														    Action
 														  </button>
 														  <div class="dropdown-menu">
-														    <a href="<?= base_url('Peserta/verifikasi/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-success btn-sm dropdown-item m-1"><i class="fas fa-money-bill "></i> Potongan</a>
+														  
 															<a href="<?= base_url('Peserta/view/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-primary btn-sm dropdown-item m-1"><i class="fas fa-search"></i> Detail</a>
 															<a href="<?= base_url('Peserta/edit/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-info btn-sm dropdown-item m-1"><i class="fas fa-edit"></i> Edit</a>
+															<?php if ($this->session->userdata('id_level')==1): ?>
 															<a href="<?= base_url('Peserta/delete/'.encrypt_url($p->id_peserta)); ?>" class="btn btn-danger btn-sm dropdown-item m-1"><i class="fas fa-trash"></i> Hapus</a>
+																
+															<?php endif ?>
 														  </div>
 														</div>
 													</td>
