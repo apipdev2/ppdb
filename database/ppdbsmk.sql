@@ -11,7 +11,7 @@
  Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 05/12/2022 09:52:24
+ Date: 06/12/2022 10:21:15
 */
 
 SET NAMES utf8mb4;
@@ -23,17 +23,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `berkas`;
 CREATE TABLE `berkas`  (
   `id_berkas` int NOT NULL AUTO_INCREMENT,
-  `nama_berkas` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `keterangan_berkas` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `tipe_berkas` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `ukuran_berkas` float NOT NULL,
+  `image` varchar(225) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `jenis_berkas` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `id_peserta` int NOT NULL,
   PRIMARY KEY (`id_berkas`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of berkas
 -- ----------------------------
+INSERT INTO `berkas` VALUES (7, '265-2658571_receipt-bot-logo-hd-png-download.png', 'KIP', 8);
 
 -- ----------------------------
 -- Table structure for berkebutuhan_khusus
@@ -81,12 +80,11 @@ CREATE TABLE `cabut_berkas`  (
   `diterima` int NULL DEFAULT NULL,
   `id_user` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_cb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cabut_berkas
 -- ----------------------------
-INSERT INTO `cabut_berkas` VALUES (11, 6, '2022-12-04', 1, 'aku', 1100000, 550000, 550000, 1);
 
 -- ----------------------------
 -- Table structure for captcha
@@ -99,16 +97,20 @@ CREATE TABLE `captcha`  (
   `word` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`captcha_id`) USING BTREE,
   INDEX `word`(`word`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 163 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of captcha
 -- ----------------------------
-INSERT INTO `captcha` VALUES (118, 1670173668, '::1', 'Sqsx');
-INSERT INTO `captcha` VALUES (119, 1670173683, '::1', 'mPMF');
-INSERT INTO `captcha` VALUES (120, 1670173796, '::1', 'deXI');
-INSERT INTO `captcha` VALUES (121, 1670173811, '::1', 'CurM');
-INSERT INTO `captcha` VALUES (122, 1670173831, '::1', 'mOnj');
+INSERT INTO `captcha` VALUES (154, 1670276574, '::1', 'lSCu');
+INSERT INTO `captcha` VALUES (155, 1670276865, '::1', 'gMLz');
+INSERT INTO `captcha` VALUES (156, 1670276896, '::1', 'RkxD');
+INSERT INTO `captcha` VALUES (157, 1670276917, '::1', 'edOB');
+INSERT INTO `captcha` VALUES (158, 1670276937, '::1', 'HhLq');
+INSERT INTO `captcha` VALUES (159, 1670276949, '::1', 'UJXl');
+INSERT INTO `captcha` VALUES (160, 1670276956, '::1', 'arxN');
+INSERT INTO `captcha` VALUES (161, 1670277058, '::1', 'dpLO');
+INSERT INTO `captcha` VALUES (162, 1670277064, '::1', 'kLts');
 
 -- ----------------------------
 -- Table structure for formulir
@@ -449,16 +451,15 @@ CREATE TABLE `peserta`  (
   `size_olahraga` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_peserta`) USING BTREE,
   UNIQUE INDEX `no_pendaftaran`(`no_pendaftaran`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of peserta
 -- ----------------------------
-INSERT INTO `peserta` VALUES (1, '202212000001', '2022-12-03', 6, NULL, 'SUDIRMAN SENANG', 'L', '127763', '360388484848', 'Tangerang', '2000-06-03', 'TL-07092022ng', 'Islam\r\n', NULL, 'Tidak', 'Kp.Cibalukbuk Rt.01/02 Ds.Nagasari Kec.Kemiri Kab.Tangerang-Banten', NULL, NULL, NULL, 'Bersama orang Tua', 'Kendaraan Pribadi', NULL, '1', NULL, NULL, NULL, '2345', NULL, NULL, 'RAHMAN', '36717777', 'Tangerang', '2015-03-04', NULL, 'Karyawan Swasta', '2 juta - 4.999.999\r\n', 'Tidak', '08523737373', 'Ruminah', '3672222', 'ngawi', '2019-06-03', NULL, 'Ibu Rumah Tangg', 'Tidak Berpenghasilan\r\n', 'Tidak', '0896789678', 'saya wali', '3423423', 'Tangerang', NULL, 'Buruh\r\n', '2022-11-29', '2 juta - 4.999.999\r\n', '08776565', NULL, 'apipdev2@gmail.com', NULL, NULL, '165', '45', 'Kurang Dari 1 KM', '3', 3, 'Teknik Komputer dan Jaringan', 'SMPN 2 Kemiri Tangerang', 2147483647, NULL, NULL, NULL, NULL, NULL, NULL, 'CB', 'Y', 'CB', 1, 2, NULL, NULL, 'default.jpg', NULL, NULL);
-INSERT INTO `peserta` VALUES (2, '202212000002', '2022-12-04', 6, NULL, 'RADEN KIAN SANTANG', 'L', '20139844', '36038848484833', 'Tangerang', '2022-12-05', 'TL-07092022VNK', 'Islam\r\n', NULL, 'Tidak', 'Kp.nagreg rt.16/09 ds.cisoka kec.cisoka kab.tangerang', NULL, NULL, NULL, 'Bersama orang Tua', 'Kendaraan Pribadi', NULL, '2', NULL, NULL, NULL, '768768', NULL, NULL, 'ISHAK', '36717777', 'Tangerang', '2022-12-05', NULL, 'Pedagang Besar\r', '5 juta - 20 juta\r\n', 'Tidak', '08976876878', 'sarminah', '3672222888', 'Blora', '2022-12-04', NULL, 'Tidak Bekerja\r\n', 'Tidak Berpenghasilan\r\n', 'Tidak', '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, 'aconkwiwin12@gmail.com', NULL, NULL, '176', '56', 'Kurang Dari 1 KM', '4', 3, 'Umum', 'SMP N 2 OK', 2147483647, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'N', 1, NULL, NULL, NULL, 'default.jpg', NULL, NULL);
-INSERT INTO `peserta` VALUES (4, '202212000004', '2022-12-04', 6, NULL, '11', NULL, '11', '11', '11', '0000-00-00', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '', '', NULL, '', NULL, NULL, NULL, '', NULL, NULL, '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, '', NULL, NULL, '', '', NULL, '', 0, '', '', 11, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, 1, NULL, NULL, NULL, 'default.jpg', NULL, NULL);
-INSERT INTO `peserta` VALUES (5, '202212000005', '2022-12-04', 6, NULL, '22', NULL, '22', '22', '22', '0000-00-00', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '', '', NULL, '', NULL, NULL, NULL, '', NULL, NULL, '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, '', NULL, NULL, '', '', NULL, '', 0, '', '', 22, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, 1, NULL, NULL, NULL, 'default.jpg', NULL, NULL);
-INSERT INTO `peserta` VALUES (6, '202212000006', '2022-12-04', 6, NULL, '22', 'L', '22', '22', '22', '2022-12-05', '', 'Islam\r\n', NULL, 'Tidak', '22', NULL, NULL, NULL, 'Wali', 'Jalan Kaki', NULL, '', NULL, NULL, NULL, '', NULL, NULL, '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, '', NULL, NULL, '', '', 'Kurang Dari 1 KM', '', 1, 'Rekayasa Perangkat Lunak', '222', 22, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', NULL, 1, 1, NULL, NULL, 'default.jpg', 'L', 'L');
+INSERT INTO `peserta` VALUES (2, '202212000002', '2022-12-04', 6, NULL, 'RADEN KIAN SANTANG', 'P', '20139844', '36038848484833', 'Tangerang', '2022-12-05', 'TL-07092022VNK', 'Islam\r\n', NULL, 'Tidak', 'Kp.nagreg rt.16/09 ds.cisoka kec.cisoka kab.tangerang', NULL, NULL, NULL, 'Bersama orang Tua', 'Kendaraan Pribadi', NULL, '2', NULL, NULL, NULL, '768768', NULL, NULL, 'ISHAK', '36717777', 'Tangerang', '2022-12-05', NULL, 'Pedagang Besar\r', '5 juta - 20 juta\r\n', 'Tidak', '08976876878', 'sarminah', '3672222888', 'Blora', '2022-12-04', NULL, 'Tidak Bekerja\r\n', 'Tidak Berpenghasilan\r\n', 'Tidak', '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, 'aconkwiwin12@gmail.com', NULL, NULL, '176', '56', 'Kurang Dari 1 KM', '4', 3, 'Umum', 'SMP N 2 OK', 2147483647, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'N', 1, 4, NULL, NULL, 'default.jpg', NULL, NULL);
+INSERT INTO `peserta` VALUES (4, '202212000004', '2022-12-04', 6, NULL, '11', 'L', '11', '11', '11', '0000-00-00', '', NULL, NULL, NULL, '', NULL, NULL, NULL, '', '', NULL, '', NULL, NULL, NULL, '', NULL, NULL, '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, '', NULL, NULL, '', '', NULL, '', 0, '', 'SMP N 2 OK', 11, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, 1, NULL, NULL, NULL, 'default.jpg', NULL, NULL);
+INSERT INTO `peserta` VALUES (7, '202212000005', '2022-12-05', 6, NULL, 'coang', 'L', '12776334', '1234123412', 'Tangerang', '2022-12-05', '', 'Islam\r\n', NULL, 'Tidak', 'dkalsdf', NULL, NULL, NULL, 'Bersama orang Tua', 'Kendaraan Pribadi', NULL, '1', NULL, NULL, NULL, '', NULL, NULL, '', 'asd', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', 'd', '', '0000-00-00', NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, '0000-00-00', NULL, '', NULL, '', '$10$JcHaMYZk7bPyFxKOdOOe6ehadF23NxQJI1vdqqiM4q9rJTypNNRwG', NULL, '123', '121', 'Kurang Dari 1 KM', '2', 3, 'Umum', 'asdfasdfas', 2147483647, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', NULL, NULL, 9, NULL, NULL, NULL, 'default.jpg', NULL, NULL);
+INSERT INTO `peserta` VALUES (8, '202212000006', '2022-12-05', 6, NULL, 'oray taneh', 'L', '1234', '123123123', 'Tanah abang', '2022-12-05', 'TL-07092022ng', 'Islam\r\n', NULL, 'Netra', 'adfasdfasdf', NULL, NULL, NULL, 'Bersama Orang Tua', 'Jalan Kaki', NULL, '2', NULL, NULL, NULL, 'ERT444', NULL, NULL, 'RAHMAN', '36717777', 'Tangerang', '2022-12-06', 'Tidak sekolah\r\n', 'Wiraswasta\r\n', '2 juta - 4.999.999\r\n', 'Tidak', '08123', 'sarminah', '3672222', 'Blora', '2022-12-05', 'Tidak sekolah\r\n', 'Tidak Bekerja\r\n', 'Tidak Berpenghasilan\r\n', 'Tidak', '089192', '', '', '', 'Tidak sekolah\r\n', 'Tidak Bekerja\r\n', '0000-00-00', 'Kurang dari 500.000\r\n', '', '08979789', 'oray@gmail.com', '$2y$10$rBSupxKUxRnT/cdCwNhahOGVIOHSFx2Y/sgwOLAG9ka9wl68evJM6', NULL, '123', '321', 'Kurang Dari 1 KM', '3', 5, 'Teknik Komputer dan Jaringan', 'smp 12', 56456, NULL, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', NULL, NULL, 6, NULL, NULL, 'K1T1S1.jpg', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for potongan_peserta
@@ -880,15 +881,14 @@ CREATE TABLE `tbl_kolektif`  (
   `cashback` int NULL DEFAULT NULL,
   `id_user` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_kolektif`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_kolektif
 -- ----------------------------
-INSERT INTO `tbl_kolektif` VALUES (18, 1, '2022-12-03', '', '', 2, 100000, 0, 1);
-INSERT INTO `tbl_kolektif` VALUES (19, 1, '2022-12-04', '', '', 1, 100000, 0, 1);
-INSERT INTO `tbl_kolektif` VALUES (20, 1, '2022-12-04', 'gw', 'guru dd', 3, 100000, 0, 1);
-INSERT INTO `tbl_kolektif` VALUES (22, 1, '2022-12-04', '', '', 6, 100000, 0, 1);
+INSERT INTO `tbl_kolektif` VALUES (1, 2, '2022-12-05', 'RISKO AMANDA', 'TKJ guru dia', 2, 100000, 50000, 1);
+INSERT INTO `tbl_kolektif` VALUES (2, 1, '2022-12-05', '', '', 1, 100000, 0, 1);
+INSERT INTO `tbl_kolektif` VALUES (3, 2, '2022-12-06', 'rojak', 'ada deh', 8, 100000, 50000, 1);
 
 -- ----------------------------
 -- Table structure for tbl_kolektor
@@ -1022,8 +1022,8 @@ CREATE TABLE `tbl_user`  (
 -- Records of tbl_user
 -- ----------------------------
 INSERT INTO `tbl_user` VALUES (1, 'admin@gmail.com', 'administrator', 'Administrator', '$2y$10$3ltF8szQPedU9cQPEcrqj.JOv6vT874XOO4POXJA1WdC5vpL4pw0y', 1, 'illustrations-gallery-it-support.png', 'Y');
-INSERT INTO `tbl_user` VALUES (6, 'apipduabelas@gmail.com', 'apip', 'user satu', '$2y$10$JcHaMYZk7bPyFxKOdOOe6ehadF23NxQJI1vdqqiM4q9rJTypNNRwG', 1, 'Tulips.jpg', 'Y');
-INSERT INTO `tbl_user` VALUES (9, 'eto@gmail.com', 'eto', '', '$2y$10$p0X97JxlxGpLaukNitKgSeyn6EqWIx05Uw07Ls.RTYpgFQQ10Eg3m', 3, NULL, 'Y');
+INSERT INTO `tbl_user` VALUES (6, 'apipduabelas@gmail.com', 'apip', 'user satu', '$2y$10$JcHaMYZk7bPyFxKOdOOe6ehadF23NxQJI1vdqqiM4q9rJTypNNRwG', 2, 'Tulips.jpg', 'Y');
+INSERT INTO `tbl_user` VALUES (9, 'eto@gmail.com', 'eto', '', '$2y$10$7jznfHbP38PRfBt9/4yCSesk6tB3ePDNVdfOpWyHk3srKhDnYHxMa', 3, 'default.jpg', 'Y');
 
 -- ----------------------------
 -- Table structure for tbl_userlevel
@@ -1071,17 +1071,18 @@ CREATE TABLE `transaksi_pembayaran`  (
   `no_pendaftaran` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_jenis` int NULL DEFAULT NULL,
   `besarnya_pembayaran` int NULL DEFAULT NULL,
+  `diskon` int NULL DEFAULT NULL,
   `id_user` int NULL DEFAULT NULL,
   `ket` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaksi_pembayaran
 -- ----------------------------
-INSERT INTO `transaksi_pembayaran` VALUES (43, 'TR-202212000002', '2022-12-05', 6, '202212000001', 2, 590000, 1, NULL);
-INSERT INTO `transaksi_pembayaran` VALUES (45, 'TR-202212000003', '2022-12-05', 6, '202212000001', 6, 560000, 1, NULL);
-INSERT INTO `transaksi_pembayaran` VALUES (46, 'TR-202212000004', '2022-12-05', 6, '202212000006', 2, 350000, 1, NULL);
+INSERT INTO `transaksi_pembayaran` VALUES (1, 'TR-202212000001', '2022-12-05', 6, '202212000001', 2, 600000, 150000, 1, NULL);
+INSERT INTO `transaksi_pembayaran` VALUES (2, 'TR-202212000002', '2022-12-05', 6, '202212000001', 6, 700000, 0, 1, NULL);
+INSERT INTO `transaksi_pembayaran` VALUES (3, 'TR-202212000003', '2022-12-06', 6, '202212000001', 7, 50000, 0, 1, NULL);
 
 -- ----------------------------
 -- Table structure for transaksi_pembayaran_tmp
@@ -1094,10 +1095,11 @@ CREATE TABLE `transaksi_pembayaran_tmp`  (
   `id_tahun` int NULL DEFAULT NULL,
   `no_pendaftaran` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_jenis` int NULL DEFAULT NULL,
+  `diskon` int NULL DEFAULT NULL,
   `besarnya_pembayaran` int NULL DEFAULT NULL,
   `id_user` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 94 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaksi_pembayaran_tmp

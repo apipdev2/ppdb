@@ -24,7 +24,9 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<a href="<?= base_url('Peserta/create'); ?>" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Tambah Peserta</a>
+									<a href="<?= base_url('Peserta/create'); ?>" class="btn btn-info btn-sm"><i class="fas fa-plus"></i> Tambah Peserta</a>
+									<a href="<?= base_url('Peserta/export'); ?>" class="btn btn-success btn-sm float-right"><i class="fas fa-upload"></i> Export</a>
+										
 								</div>
 								<div class="card-body">
 									<div class="table-responsive">
