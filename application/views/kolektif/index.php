@@ -89,8 +89,10 @@
 													<td><?= $k->asal_sekolah; ?></td>
 													
 													<td>
+														<?php if ($this->session->userdata('id_level')==1): ?>
 														<a href="<?= base_url('Kolektif/edit/'.encrypt_url($k->id_kolektif)); ?>" class="fas fa-edit text-info"></a>
 														<a href="<?= base_url('Kolektif/delete/'.encrypt_url($k->id_kolektif).'/'.encrypt_url($k->id_peserta)); ?>" class="fas fa-trash text-danger"></a>
+														<?php endif ?>
 													</td>
 												</tr>
 												

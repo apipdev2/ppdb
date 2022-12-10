@@ -105,6 +105,12 @@ class Kolektif extends CI_Controller {
 
 	public function edit($id)
 	{	
+		if ($this->session->userdata('id_level')!=1){
+
+			$this->session->set_flashdata('message', "<script>swal('warning!', 'not allowed!', 'info');</script>");
+        		redirect('Transaksi_pembayaran/laporan');
+
+		}
 		$id = decrypt_url($id);
 		$data = [
 			'title'=>'Ubah Data Kolektif',
@@ -153,6 +159,12 @@ class Kolektif extends CI_Controller {
 
 	public function delete($id)
 	{	
+		if ($this->session->userdata('id_level')!=1){
+
+			$this->session->set_flashdata('message', "<script>swal('warning!', 'not allowed!', 'info');</script>");
+        		redirect('Transaksi_pembayaran/laporan');
+
+		}
 		$id = decrypt_url($id);
 		$peserta = decrypt_url($this->uri->segment(4));
 
@@ -184,6 +196,7 @@ class Kolektif extends CI_Controller {
 
 			'total_pendaftaran' => $this->db->select_sum('biaya_pendaftaran','j_pendaftaran')
 									->where('tanggal >=', $tgl1)
+									->where('tanggal <=', $tgl2)
 									->where('tanggal <=', $tgl2)
 									->get('tbl_kolektif')->row(),
 			'total_cashback' => $this->db->select_sum('cashback','j_cashback')

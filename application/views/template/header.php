@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title><?= $title; ?></title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="<?= base_url('assets/img/icon.ico" type="image/x-icon');?>"/>
+	<link rel="icon" href="<?= base_url('assets/img/icon2.png" type="image/x-icon');?>"/>
 
 	<!-- Fonts and icons -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/fonts.min.css'); ?>">
@@ -51,8 +51,9 @@
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="blue">
 				
-				<a href="index.html" class="logo">
-					<img src="<?= base_url('assets/img/logo.svg');?>" alt="navbar brand" class="navbar-brand">
+				<a href="index.html" class="logo text-light">
+					<img src="<?= base_url('assets/img/ilustrasi.png');?>" alt="navbar brand" class="navbar-brand" width="50">
+					PPDB
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">

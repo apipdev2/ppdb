@@ -33,7 +33,7 @@ class Siswa extends CI_Controller {
 	{
 		$id = $this->session->userdata('id_user');
 
-		$peserta = $this->pm->getPesertaById($id)->row();
+		$peserta = $this->pm->getSiswaById($id)->row();
 		$upload_image = $_FILES['image']['name'];
 
             if ($upload_image) {
@@ -75,7 +75,7 @@ class Siswa extends CI_Controller {
 		}
 		$data = [
 			'title'=>'Data Pribadi',
-			'peserta'=> $this->pm->getPesertaById($id)->row(),
+			'peserta'=> $this->pm->getSiswaById($id)->row(),
 			'jurusan'	=> $this->js->getJurusan()->result(),
 			'agama'		=> $this->db->get('tbl_agama')->result(),
 			'kebutuhan'	=> $this->db->get('berkebutuhan_khusus')->result(),
@@ -101,7 +101,6 @@ class Siswa extends CI_Controller {
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat lahir', 'required');
 		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
 		$this->form_validation->set_rules('id_jurusan', 'Jurusan1', 'required');
-		$this->form_validation->set_rules('jurusan2', 'jurusan2', 'required');
 		$this->form_validation->set_rules('asal_sekolah', 'Asal sekolah', 'required');
 
 		if ($this->form_validation->run()==false) {
@@ -115,40 +114,40 @@ class Siswa extends CI_Controller {
 
 			if ($cek_pendaftaran->status_pendaftaran != "Y") {
 				$data =[
-					'nik' 			 => $this->input->post('nik'),
-					'nama_peserta'   => $this->input->post('nama_peserta'),				
-					'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-					'tempat_lahir' => $this->input->post('tempat_lahir'),
-					'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-					'id_jurusan'	 => $this->input->post('id_jurusan'),
-					'asal_sekolah' => $this->input->post('asal_sekolah'),
+					'nik' 			 => htmlspecialchars($this->input->post('nik')),
+					'nama_peserta'   =>htmlspecialchars( $this->input->post('nama_peserta')),				
+					'jenis_kelamin' => htmlspecialchars($this->input->post('jenis_kelamin')),
+					'tempat_lahir' => htmlspecialchars($this->input->post('tempat_lahir')),
+					'tanggal_lahir' => htmlspecialchars($this->input->post('tanggal_lahir')),
+					'id_jurusan'	 => htmlspecialchars($this->input->post('id_jurusan')),
+					'asal_sekolah' => htmlspecialchars($this->input->post('asal_sekolah')),
 				];
 			}else{
 				$data =[
-					'nik' 			 => $this->input->post('nik'),
-					'nama_peserta'   => $this->input->post('nama_peserta'),				
-					'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-					'nisn' => $this->input->post('nisn'),				
-					'tempat_lahir' => $this->input->post('tempat_lahir'),
-					'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-					'no_registrasi_akta_lahir' => $this->input->post('no_registrasi_akta_lahir'),
-					'agama' => $this->input->post('agama'),
-					'berkebutuhan_khusus' => $this->input->post('berkebutuhan_khusus'),
-					'alamat' => $this->input->post('alamat'),
-					'tempat_tinggal' => $this->input->post('tempat_tinggal'),
-					'moda_transportasi' => $this->input->post('moda_transportasi'),
-					'anak_ke' => $this->input->post('anak_ke'),
-					'no_kip' => $this->input->post('no_kip'),
-					'nomor_hp' => $this->input->post('nomor_hp'),
-					'email' => $this->input->post('email'),
-					'tinggi_badan' => $this->input->post('tinggi_badan'),
-					'berat_badan' => $this->input->post('berat_badan'),
-					'jarak' => $this->input->post('jarak'),
-					'jumlah_saudara_kandung' => $this->input->post('jumlah_saudara_kandung'),
-					'id_jurusan'	 => $this->input->post('id_jurusan'),
-					'jurusan2' => $this->input->post('jurusan2'),
-					'asal_sekolah' => $this->input->post('asal_sekolah'),
-					'no_kk	' => $this->input->post('no_kk'),
+					'nik' 			 => htmlspecialchars($this->input->post('nik')),
+					'nama_peserta'   => htmlspecialchars($this->input->post('nama_peserta')),				
+					'jenis_kelamin' => htmlspecialchars($this->input->post('jenis_kelamin')),
+					'nisn' => htmlspecialchars($this->input->post('nisn')),				
+					'tempat_lahir' => htmlspecialchars($this->input->post('tempat_lahir')),
+					'tanggal_lahir' => htmlspecialchars($this->input->post('tanggal_lahir'),
+					'no_registrasi_akta_lahir' => htmlspecialchars(this->input->post('no_registrasi_akta_lahir')),
+					'agama' => htmlspecialchars($this->input->post('agama')),
+					'berkebutuhan_khusus' => htmlspecialchars($this->input->post('berkebutuhan_khusus')),
+					'alamat' => htmlspecialchars($this->input->post('alamat')),
+					'tempat_tinggal' => htmlspecialchars($this->input->post('tempat_tinggal')),
+					'moda_transportasi' => htmlspecialchars($this->input->post('moda_transportasi')),
+					'anak_ke' => htmlspecialchars($this->input->post('anak_ke')),
+					'no_kip' =>htmlspecialchars($this->input->post('no_kip')),
+					'nomor_hp' => htmlspecialchars($this->input->post('nomor_hp')),
+					'email' => htmlspecialchars($this->input->post('email')),
+					'tinggi_badan' => htmlspecialchars($this->input->post('tinggi_badan')),
+					'berat_badan' => htmlspecialchars($this->input->post('berat_badan')),
+					'jarak' => htmlspecialchars($this->input->post('jarak')),
+					'jumlah_saudara_kandung' => htmlspecialchars($this->input->post('jumlah_saudara_kandung')),
+					'id_jurusan'	 => htmlspecialchars($this->input->post('id_jurusan')),
+					'jurusan2' => htmlspecialchars($this->input->post('jurusan2')),
+					'asal_sekolah' => htmlspecialchars($this->input->post('asal_sekolah')),
+					'no_kk	' => htmlspecialchars($this->input->post('no_kk')),
 				];
 			}		
 
@@ -172,7 +171,7 @@ class Siswa extends CI_Controller {
 		}
 		$data = [
 			'title'=>'Data Orang Tua',
-			'peserta'=> $this->pm->getPesertaById($id)->row(),
+			'peserta'=> $this->pm->getSiswaById($id)->row(),
 			'jurusan'	=> $this->js->getJurusan()->result(),
 			'agama'		=> $this->db->get('tbl_agama')->result(),
 			'kebutuhan'	=> $this->db->get('berkebutuhan_khusus')->result(),
@@ -212,24 +211,24 @@ class Siswa extends CI_Controller {
 
 			$data =[
 				
-				'nama_ayah' => $this->input->post('nama_ayah'),
-				'nik_ayah' => $this->input->post('nik_ayah'),
-				'tempat_lahir_ayah' => $this->input->post('tempat_lahir_ayah'),
-				'tanggal_lahir_ayah' => $this->input->post('tanggal_lahir_ayah'),
-				'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-				'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-				'penghasilan_bulanan_ayah' => $this->input->post('penghasilan_bulanan_ayah'),
-				'berkebutuhan_khusus_ayah' => $this->input->post('berkebutuhan_khusus_ayah'),
-				'no_ayah' => $this->input->post('no_ayah'),
-				'nama_ibu' => $this->input->post('nama_ibu'),
-				'nik_ibu' => $this->input->post('nik_ibu'),
-				'tempat_lahir_ibu' => $this->input->post('tempat_lahir_ibu'),
-				'tanggal_lahir_ibu' => $this->input->post('tanggal_lahir_ibu'),
-				'pendidikan_ibu' => $this->input->post('pendidikan_ibu'),
-				'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu'),
-				'penghasilan_bulanan_ibu' => $this->input->post('penghasilan_bulanan_ibu'),
-				'berkebutuhan_khusus_ibu' => $this->input->post('berkebutuhan_khusus_ibu'),
-				'no_ibu' => $this->input->post('no_ibu'),
+				'nama_ayah' => htmlspecialchars($this->input->post('nama_ayah')),
+				'nik_ayah' => htmlspecialchars($this->input->post('nik_ayah')),
+				'tempat_lahir_ayah' => htmlspecialchars($this->input->post('tempat_lahir_ayah')),
+				'tanggal_lahir_ayah' => htmlspecialchars($this->input->post('tanggal_lahir_ayah')),
+				'pendidikan_ayah' => htmlspecialchars($this->input->post('pendidikan_ayah')),
+				'pekerjaan_ayah' => htmlspecialchars($this->input->post('pekerjaan_ayah')),
+				'penghasilan_bulanan_ayah' => htmlspecialchars($this->input->post('penghasilan_bulanan_ayah')),
+				'berkebutuhan_khusus_ayah' => htmlspecialchars($this->input->post('berkebutuhan_khusus_ayah')),
+				'no_ayah' => htmlspecialchars($this->input->post('no_ayah')),
+				'nama_ibu' => htmlspecialchars($this->input->post('nama_ibu')),
+				'nik_ibu' => htmlspecialchars($this->input->post('nik_ibu')),
+				'tempat_lahir_ibu' => htmlspecialchars($this->input->post('tempat_lahir_ibu')),
+				'tanggal_lahir_ibu' => htmlspecialchars($this->input->post('tanggal_lahir_ibu')),
+				'pendidikan_ibu' => htmlspecialchars($this->input->post('pendidikan_ibu')),
+				'pekerjaan_ibu' => htmlspecialchars($this->input->post('pekerjaan_ibu')),
+				'penghasilan_bulanan_ibu' =>htmlspecialchars($this->input->post('penghasilan_bulanan_ibu')),
+				'berkebutuhan_khusus_ibu' => htmlspecialchars($this->input->post('berkebutuhan_khusus_ibu')),
+				'no_ibu' => htmlspecialchars($this->input->post('no_ibu')),
 				
 			];
 
@@ -251,7 +250,7 @@ class Siswa extends CI_Controller {
 		}
 		$data = [
 			'title'=>'Data Wali',
-			'peserta'=> $this->pm->getPesertaById($id)->row(),
+			'peserta'=> $this->pm->getSiswaById($id)->row(),
 			'jurusan'	=> $this->js->getJurusan()->result(),
 			'agama'		=> $this->db->get('tbl_agama')->result(),
 			'kebutuhan'	=> $this->db->get('berkebutuhan_khusus')->result(),
@@ -286,14 +285,14 @@ class Siswa extends CI_Controller {
 
 			$data =[
 				
-				'nama_wali' => $this->input->post('nama_wali'),
-				'nik_wali' => $this->input->post('nik_wali'),
-				'tempat_lahir_wali' => $this->input->post('tempat_lahir_wali'),
-				'pendidikan_wali' => $this->input->post('pendidikan_wali'),
-				'pekerjaan_wali' => $this->input->post('pekerjaan_wali'),
-				'tanggal_lahir_wali' => $this->input->post('tanggal_lahir_wali'),
-				'penghasilan_bulanan_wali' => $this->input->post('penghasilan_bulanan_wali'),
-				'no_wali' => $this->input->post('no_wali'),
+				'nama_wali' => htmlspecialchars($this->input->post('nama_wali')),
+				'nik_wali' => htmlspecialchars($this->input->post('nik_wali')),
+				'tempat_lahir_wali' => htmlspecialchars($this->input->post('tempat_lahir_wali')),
+				'pendidikan_wali' => htmlspecialchars($this->input->post('pendidikan_wali')),
+				'pekerjaan_wali' => htmlspecialchars($this->input->post('pekerjaan_wali')),
+				'tanggal_lahir_wali' => htmlspecialchars($this->input->post('tanggal_lahir_wali')),
+				'penghasilan_bulanan_wali' => htmlspecialchars($this->input->post('penghasilan_bulanan_wali')),
+				'no_wali' => htmlspecialchars($this->input->post('no_wali')),
 				
 			];
 
@@ -354,13 +353,15 @@ class Siswa extends CI_Controller {
 		                    $new_image = $this->upload->data('file_name');
 		                    
 		                } else {
-		                    echo $this->upload->dispay_errors();
+		                    // echo $this->upload->dispay_errors();
+		                    $this->session->set_flashdata('message', "<script>swal('Info!', 'File Terlalu Besar max : 2Mb!', 'error');</script>");
+		                    redirect('Siswa/d_berkas');
 		                }
 		            }	
 
 				$data =[
 					
-					'jenis_berkas' => $this->input->post('jenis_berkas'),
+					'jenis_berkas' => htmlspecialchars($this->input->post('jenis_berkas')),
 					'image' => $new_image,
 					'id_peserta' => $id,
 					
@@ -403,6 +404,8 @@ class Siswa extends CI_Controller {
 		$this->session->set_flashdata('message', "<script>swal('Sukses!', 'Data Berhasil Diubah!', 'success');</script>");
         	redirect('Home');
 	}
+
+	
 
 
 	

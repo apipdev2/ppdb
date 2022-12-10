@@ -117,7 +117,98 @@
 								<div class="col-md-6">
 									<div class="card">
 										<div class="card-body">
-										<div class="table-responsive">
+											
+											<table class="table table-bordered table-responsive">
+												<tr>
+													<th colspan="5" class="text-center">REKAP DAFTAR PPDB</th>
+												</tr>
+												<tr>
+													<th class="text-center">Jurusan</th>
+													<th class="text-center">L</th>
+													<th class="text-center">P</th>
+													<th class="text-center">Jumlah</th>
+													<th class="text-center">Kuota</th>
+												</tr>
+
+												<?php foreach ($jurusan as $j): ?>
+												<?php
+
+													$jml_l = $this->db->select('*')
+																  ->from('peserta')
+																  ->where('jenis_kelamin','L')
+																  ->where('id_jurusan',$j->id_jurusan)
+																  ->get()->num_rows();
+													$jml_p = $this->db->select('*')
+																  ->from('peserta')
+																  ->where('jenis_kelamin','P')
+																  ->where('id_jurusan',$j->id_jurusan)
+																  ->get()->num_rows();
+													?>
+													<tr>
+														<td><?= $j->nama_jurusan;?></td>
+														<td class="text-center"><?= $jml_l;?></td>
+														<td class="text-center"><?= $jml_p;?></td>
+														<td class="text-center"><?= $jml_l + $jml_p;?></td>
+														<td class="text-center"><?= $j->kuota_jurusan;?></td>
+													</tr>
+												<?php endforeach ?>
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+
+								<div class="col-md-6">
+									<div class="card">
+										<div class="card-body">
+											
+											<table class="table table-bordered table-responsive">
+												<tr>
+													<th colspan="5" class="text-center">REKAP DAFTAR ULANG</th>
+												</tr>
+												<tr>
+													<th class="text-center">Jurusan</th>
+													<th class="text-center">L</th>
+													<th class="text-center">P</th>
+													<th class="text-center">Jumlah</th>
+													<th class="text-center">Kuota</th>
+												</tr>
+
+												<?php foreach ($jurusan as $j): ?>
+												<?php
+
+													$jml_l = $this->db->select('*')
+																  ->from('peserta p')
+																  ->join('transaksi_pembayaran tp','tp.no_pendaftaran = p.no_pendaftaran')
+																  ->where('jenis_kelamin','L')
+																  ->where('id_jurusan',$j->id_jurusan)
+																  ->get()->num_rows();
+													$jml_p = $this->db->select('*')
+																  ->from('peserta p')
+																  ->join('transaksi_pembayaran tp','tp.no_pendaftaran = p.no_pendaftaran')
+																  ->where('jenis_kelamin','P')
+																  ->where('id_jurusan',$j->id_jurusan)
+																  ->get()->num_rows();
+													?>
+													<tr>
+														<td><?= $j->nama_jurusan;?></td>
+														<td class="text-center"><?= $jml_l;?></td>
+														<td class="text-center"><?= $jml_p;?></td>
+														<td class="text-center"><?= $jml_l + $jml_p;?></td>
+														<td class="text-center"><?= $j->kuota_jurusan;?></td>
+													</tr>
+												<?php endforeach ?>
+											</table>
+										</div>
+									</div>
+								</div>
+
+						</div>
+
+						<div class="col-md-12">
+									<div class="card">
+										<div class="card-body">
 											<table class="table table-bordered">
 											<tr>
 												<th colspan="2" class="text-center">REKAP DATA ASAL SEKOLAH</th>
@@ -142,54 +233,16 @@
 												</tr>
 									          <?php endforeach ?>
 								           </table>
-								        </div>
-										</div>
-									</div>
+								     
 								</div>
 
-								<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										
-									<table class="table table-bordered table-responsive">
-										<tr>
-											<th colspan="5" class="text-center">REKAP DATA PERJURUSAN</th>
-										</tr>
-										<tr>
-											<th class="text-center">Jurusan</th>
-											<th class="text-center">L</th>
-											<th class="text-center">P</th>
-											<th class="text-center">Jumlah</th>
-											<th class="text-center">Kuota</th>
-										</tr>
 
-										<?php foreach ($jurusan as $j): ?>
-										<?php
 
-											$jml_l = $this->db->select('*')
-														  ->from('peserta')
-														  ->where('jenis_kelamin','L')
-														  ->where('id_jurusan',$j->id_jurusan)
-														  ->get()->num_rows();
-											$jml_p = $this->db->select('*')
-														  ->from('peserta')
-														  ->where('jenis_kelamin','P')
-														  ->where('id_jurusan',$j->id_jurusan)
-														  ->get()->num_rows();
-											?>
-											<tr>
-												<td><?= $j->nama_jurusan;?></td>
-												<td class="text-center"><?= $jml_l;?></td>
-												<td class="text-center"><?= $jml_p;?></td>
-												<td class="text-center"><?= $jml_l + $jml_p;?></td>
-												<td class="text-center"><?= $j->kuota_jurusan;?></td>
-											</tr>
-										<?php endforeach ?>
-									</table>
-									</div>
-								</div>
+								
 							</div>
 						</div>
+
+
 
 					  
 					          

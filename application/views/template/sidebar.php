@@ -47,6 +47,32 @@
 							</div>
 						</li>
 
+						
+						<?php if ($this->session->userdata('id_level')==2): ?>
+
+							<li class="nav-item">
+							<a data-toggle="collapse" href="#money">
+								<i class="fas fa-store"></i>
+								<p>Daftar Ulang</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="money">
+								<ul class="nav nav-collapse">
+									
+								
+
+									<li>
+										<a href="<?= base_url('Transaksi_pembayaran/laporan'); ?>">
+											<span class="sub-item">Laporan DU</span>
+										</a>
+									</li>
+									
+									
+									
+								</ul>
+							</div>
+						</li>
+						<?php else: ?>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#money">
 								<i class="fas fa-store"></i>
@@ -74,6 +100,8 @@
 								</ul>
 							</div>
 						</li>
+						<?php endif ?>
+
 
 						<?php if ($this->session->userdata('id_level')==1): ?>
 							

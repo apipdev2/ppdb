@@ -194,6 +194,13 @@ class Transaksi_pembayaran extends CI_Controller {
 
 	public function add()
 	{
+		if ($this->session->userdata('id_level')==2){
+
+			$this->session->set_flashdata('message', "<script>swal('warning!', 'not allowed!', 'info');</script>");
+        		redirect('Transaksi_pembayaran/laporan');
+
+		}
+
 		$data = [
 			'title'=>'Tambah Transaksi Pembayaran',
 			'peserta'=> $this->db->select('*')

@@ -37,6 +37,17 @@ class Peserta_model extends CI_Model {
 		$this->db->insert('peserta',$data);
 	}
 
+	public function getSiswaById($id)
+	{
+		return $this->db->select('*')
+				 ->from('peserta p')
+				 ->where('p.id_peserta',$id)
+				 ->where('p.id_tahun','6')
+				 ->get();
+	}
+
+
+
 	
 
 }

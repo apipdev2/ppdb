@@ -152,6 +152,7 @@ class Peserta extends CI_Controller {
 			'peserta'=> $this->pm->getPesertaById($id)->row(),
 			'kolektif'	=> $this->db->get('tbl_kolektor')->result(),
 			'potongan'	=> $this->db->get('tbl_potongan')->result(),
+			'berkas' => $this->db->get_where('berkas',['id_peserta'=>$id])->result()
 		];
 
 		
@@ -163,11 +164,30 @@ class Peserta extends CI_Controller {
 		
 	}
 
+	public function print_view($id)
+	{	
+		$id = decrypt_url($id);
+		$data = [
+			'title' => 'Bio Peserta',
+			'peserta'=> $this->pm->getPesertaById($id)->row(),
+			'kolektif'	=> $this->db->get('tbl_kolektor')->result(),
+			'potongan'	=> $this->db->get('tbl_potongan')->result(),
+			'berkas' => $this->db->get_where('berkas',['id_peserta'=>$id])->result()
+		];
+
+		$this->load->library('Pdf');
+	    $this->pdf->setFileName = "Bio Peserta.pdf";
+	    $this->pdf->setPaper('A4', 'Portrait');
+		$this->load->view('peserta/print', $data);
+
+		
+	}
+
 	public function edit($id)
 	{	
 		$id = decrypt_url($id);
 		$data = [
-			'title' => 'Verifikasi',
+			'title' => 'Edit Peserta',
 			'peserta'=> $this->pm->getPesertaById($id)->row(),
 			'jurusan'	=> $this->js->getJurusan()->result(),
 			'agama'		=> $this->db->get('tbl_agama')->result(),
@@ -287,6 +307,11 @@ class Peserta extends CI_Controller {
 		$id = $this->input->post('id_potongan');
 		$q  = $this->db->get_where('tbl_potongan',['id_potongan' => $id])->row();
 		echo json_encode($q);
+	}
+
+	public function download($image)
+	{	
+		force_download('./assets/images/foto/'.$image,NULL);
 	}
 
 	

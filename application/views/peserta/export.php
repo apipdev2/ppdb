@@ -85,10 +85,17 @@
 			<th>pekerjaan_wali</th>
 			<th>penghasilan_bulanan_wali</th>
 			<th>no_wali</th>
+			<th>Biaya Formulir</th>
+			<th>Jenis Potongan</th>
+			<th>Diskon</th>
+			<th>DU1</th>
+			<th>DU2</th>
+			<th>DU3</th>
+			<th>Total DU + Potongan + Diskon</th>
 		</tr>
 		<?php
-		header("Content-type: application/vnd-ms-excel");
-		header("Content-Disposition: attachment; filename=Data Peserta.xls");
+		// header("Content-type: application/vnd-ms-excel");
+		// header("Content-Disposition: attachment; filename=Data Peserta.xls");
 		?>
 		<?php $no=1; foreach ($peserta as $p): ?>
 													
@@ -146,6 +153,75 @@
 			<td><?= $p->pekerjaan_wali;?></td>
 			<td><?= $p->penghasilan_bulanan_wali;?></td>
 			<td>'<?= $p->no_wali;?></td>
+			<td>
+				<?php
+				$formulir = $this->db->get_where('tbl_kolektif',['id_peserta'=>$p->id_peserta]); 				
+
+ 				if ($formulir->num_rows() > 0) {
+ 					echo number_format($formulir->row()->biaya_pendaftaran);
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$potongan = $this->db->get_where('tbl_potongan',['id_potongan'=>$p->id_potongan]); 				
+
+ 				if ($potongan->num_rows() > 0) {
+ 					$jenis_potongan = $potongan->row()->jenis_potongan;
+ 					$j_potongan = $potongan->row()->nominal;
+ 					echo $jenis_potongan;
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$tp = $this->db->get_where('transaksi_pembayaran',['no_pendaftaran'=>$p->no_pendaftaran]);		
+
+ 				if ($tp->num_rows() > 0) {
+ 					echo number_format($tp->row()->diskon);
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$tp = $this->db->get_where('transaksi_pembayaran',['no_pendaftaran'=>$p->no_pendaftaran,'id_jenis'=>'2']);		
+
+ 				if ($tp->num_rows() > 0) {
+ 					echo number_format($tp->row()->besarnya_pembayaran);
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$tp = $this->db->get_where('transaksi_pembayaran',['no_pendaftaran'=>$p->no_pendaftaran,'id_jenis'=>'6']);		
+
+ 				if ($tp->num_rows() > 0) {
+ 					echo number_format($tp->row()->besarnya_pembayaran);
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$tp = $this->db->get_where('transaksi_pembayaran',['no_pendaftaran'=>$p->no_pendaftaran,'id_jenis'=>'7']);		
+
+ 				if ($tp->num_rows() > 0) {
+ 					echo number_format($tp->row()->besarnya_pembayaran);
+ 				}
+				 ?>
+			</td>
+			<td>
+				<?php
+				$jml_du = $this->db->select_sum('besarnya_pembayaran')->where('no_pendaftaran',$p->no_pendaftaran)->get('transaksi_pembayaran');	
+				$jml_diskon = $this->db->get_where('transaksi_pembayaran',['no_pendaftaran'=>$p->no_pendaftaran]);		
+
+ 				if ($jml_du->num_rows() > 0 && $jml_diskon->num_rows() > 0) {
+
+ 					$du = $jml_du->row()->besarnya_pembayaran;
+ 					$diskon = $jml_diskon->row()->diskon;
+ 					echo number_format($j_potongan + $diskon + $du);
+ 				}
+				 ?>
+			</td>
 			
 		<?php endforeach ?>
 	</table>

@@ -319,8 +319,8 @@
 					data :{
 						no_pendaftaran : no_pendaftaran
 					},
-					success : function(data1){	
-
+					success : function(data1){
+						
 						var total = parseInt(data1.total_du['besarnya_pembayaran'])+parseInt(data1.potongan['nominal'])+parseInt(data1.diskon['diskon'])+parseInt(besarnya)+parseInt(diskon);
 
 						if (total > parseInt(2000000)) {

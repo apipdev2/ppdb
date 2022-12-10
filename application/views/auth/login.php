@@ -26,7 +26,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <img src="<?= base_url('asset_login/images/undraw_remotely_2j6y.svg');?>" alt="Image" class="img-fluid">
+         <img src="<?= base_url('asset_login/images/ilustrasi.png');?>" alt="Image" class="img-fluid">
         </div>
         <div class="col-md-6 contents">
           <div class="row justify-content-center">
@@ -39,6 +39,7 @@
               <div class="form-group first">
                 <label for="username">Email</label>
                 <input type="email" name="email" class="form-control" id="username">
+                <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
 
               </div>
               <div class="form-group last ">
